@@ -107,21 +107,21 @@ class RoomCard extends StatelessWidget {
                 'Offline',
                 style: warningTextStyle
               ),
-              leading: SvgPicture.asset('assets/Exclamation.svg'),
+              leading: device.online? SvgPicture.asset('assets/Check.svg'): SvgPicture.asset('assets/Exclamation.svg'),
             ),
             CardRowItem(
               text: device.secure? const Text('Secured'): const Text(
                 'Tampered',
                 style: warningTextStyle
               ),
-              leading: SvgPicture.asset('assets/Exclamation.svg'),
+              leading: device.secure? SvgPicture.asset('assets/Check.svg'): SvgPicture.asset('assets/Exclamation.svg'),
             ),
             CardRowItem(
               text: device.configured? const Text('Configured'): const Text(
                 'Tampered',
                 style: warningTextStyle
               ),
-              leading: SvgPicture.asset('assets/Check.svg'),
+              leading: device.configured? SvgPicture.asset('assets/Check.svg'): SvgPicture.asset('assets/Exclamation.svg'),
             ),
           ],
           info: [
