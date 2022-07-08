@@ -87,6 +87,8 @@ class Api {
   Future<List<JSON>> getAreas() async {
     await Future.delayed(const Duration(milliseconds: 125));
     return [{
+      "name": "Common area",
+      "icon": "stairs",
       "id": 1,
       "contacts": [
         _contactJson

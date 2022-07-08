@@ -8,6 +8,8 @@ typedef JSON = Map<String, dynamic>;
 @JsonSerializable()
 class Area {
   final int id;
+  final String name;
+  final String icon;
   final List<Contact> contacts;
   final List<Device> devices;
   final List<String> notes;
@@ -16,6 +18,8 @@ class Area {
     required this.id,
     required this.contacts,
     required this.devices,
+    required this.icon,
+    required this.name,
     this.notes = const [],
   });
 

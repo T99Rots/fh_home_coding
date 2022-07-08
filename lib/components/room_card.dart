@@ -1,6 +1,6 @@
 import 'package:fh_home_coding/components/button.dart';
 import 'package:fh_home_coding/components/card.dart';
-import 'package:fh_home_coding/device_icons.dart';
+import 'package:fh_home_coding/icons.dart';
 import 'package:fh_home_coding/models/area_model.dart';
 import 'package:fh_home_coding/types.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class RoomCard extends StatelessWidget {
         height: 25,
         child: SvgPicture.asset('assets/stairs.svg')
       ),
-      title: 'Common area',
+      title: area.name,
       actions: [
         CustomButton(
           text: const Text('CONTACT'),

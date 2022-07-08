@@ -14,6 +14,8 @@ Area _$AreaFromJson(Map<String, dynamic> json) => Area(
       devices: (json['devices'] as List<dynamic>)
           .map((e) => Device.fromJson(e as Map<String, dynamic>))
           .toList(),
+      icon: json['icon'] as String,
+      name: json['name'] as String,
       notes:
           (json['notes'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               const [],
@@ -21,6 +23,8 @@ Area _$AreaFromJson(Map<String, dynamic> json) => Area(
 
 Map<String, dynamic> _$AreaToJson(Area instance) => <String, dynamic>{
       'id': instance.id,
+      'name': instance.name,
+      'icon': instance.icon,
       'contacts': instance.contacts,
       'devices': instance.devices,
       'notes': instance.notes,

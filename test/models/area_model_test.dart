@@ -49,6 +49,8 @@ void main() {
 
   when(api.getAreas()).thenAnswer((_) => Future.value([{
     "id": 1,
+    "name": "mock area",
+    "icon": "stairs",
     "contacts": [
       mockContactJson
     ],
@@ -67,6 +69,8 @@ void main() {
     await model.loadAreas();
 
     expect(model.areas.length, 1);
+    expect(model.areas.first.name, "mock area");
+    expect(model.areas.first.icon, "stairs");
     expect(model.areas.first.contacts.length, 1);
 
     final contact = model.areas.first.contacts.first;
@@ -201,5 +205,4 @@ void main() {
 
     expect(model.areas.first.devices.length, equals(0));
   });
-
 }
