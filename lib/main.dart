@@ -21,7 +21,7 @@ class FLutterCodingAssignmentApp extends StatelessWidget {
       child: MaterialApp(
         routes: routes,
         initialRoute: '/home',
-        title: 'Flutter Home Coding',
+        title: 'Future Home coding assignment',
         debugShowCheckedModeBanner: false,
         theme: _buildTheme(Brightness.light),
       ),
