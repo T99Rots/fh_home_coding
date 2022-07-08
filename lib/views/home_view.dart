@@ -1,4 +1,4 @@
-import 'package:fh_home_coding/components/room-card.dart';
+import 'package:fh_home_coding/components/room_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -8,15 +8,16 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color(0xffe8e8e8),
-      backgroundColor: const Color(0xff212121),
+      backgroundColor: const Color(0xffe8e8e8),
       appBar: AppBar(
         backgroundColor: const Color(0xff212121),
         title: const Text('Future Home coding assignment'),
       ),
       body: Center(
-        child: SizedBox(
-          width: 1160,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 1160
+          ),
           child: RoomCard(
             notes: 8,
             onAddContact: () {},

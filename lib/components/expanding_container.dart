@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ExpandingContainer extends StatefulWidget {
-  final Widget Function(BuildContext context, VoidCallback toggleOpened, Animation<double> animation) builder;
+  final Widget Function(BuildContext context, VoidCallback toggleOpened, Animation<double> animation, bool expanded) builder;
   final Widget child;
+  final bool initiallyExpanded;
 
   const ExpandingContainer({
     Key? key,
+    this.initiallyExpanded = false,
     required this.builder,
-    required this.child
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -17,16 +19,17 @@ class ExpandingContainer extends StatefulWidget {
 class _ExpandingContainerState extends State<ExpandingContainer> with TickerProviderStateMixin {
   bool _expanded = true;
   bool _contentVisible = false;
-  late AnimationController controller;
-  late Widget child;
+  late AnimationController _controller;
+  late Widget _child;
 
   @override
   void initState() {
-    child = widget.child;
+    _expanded = widget.initiallyExpanded;
     _contentVisible = _expanded;
-    controller = AnimationController(vsync: this, value: _expanded? 1: 0);
-    controller.addListener(() {
-      final shouldBeVisible = controller.value > 0;
+    _child = widget.child;
+    _controller = AnimationController(vsync: this, value: _expanded? 1: 0);
+    _controller.addListener(() {
+      final shouldBeVisible = _controller.value > 0;
       if(_contentVisible != shouldBeVisible) {
         setState(() {
           _contentVisible = shouldBeVisible;
@@ -39,7 +42,7 @@ class _ExpandingContainerState extends State<ExpandingContainer> with TickerProv
   @override
   void didUpdateWidget(covariant ExpandingContainer oldWidget) {
     setState(() {
-      child = widget.child;
+      _child = widget.child;
     });
     super.didUpdateWidget(oldWidget);
   }
@@ -53,27 +56,28 @@ class _ExpandingContainerState extends State<ExpandingContainer> with TickerProv
           () {
             setState(() {
               _expanded = !_expanded;
-              controller.animateTo(
+              _controller.animateTo(
                 _expanded? 1: 0,
                 duration: const Duration(milliseconds: 225),
                 curve: Curves.easeOut
               );
             });
           },
-          controller
+          _controller,
+          _expanded
         ),
         if(_contentVisible) AnimatedBuilder(
-          animation: controller,
+          animation: _controller,
           builder: (context, child) {
             return ClipRect(
               child: Align(
                 alignment: Alignment.topCenter,
-                heightFactor: controller.value,
+                heightFactor: _controller.value,
                 child: child,
               ),
             );
           },
-          child: child
+          child: _child
         )
       ],
     );

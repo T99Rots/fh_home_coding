@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:fh_home_coding/components/equally-divided-row.dart';
-import 'package:fh_home_coding/components/expanding-container.dart';
+import 'package:fh_home_coding/components/equally_divided_row.dart';
+import 'package:fh_home_coding/components/expanding_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -102,7 +102,8 @@ class CardRow extends StatelessWidget {
         borderRadius: BorderRadius.circular(15)
       ),
       child: ExpandingContainer(
-        builder: (context, toggleOpened, animation) {
+        initiallyExpanded: true,
+        builder: (context, toggleOpened, animation, expanded) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
