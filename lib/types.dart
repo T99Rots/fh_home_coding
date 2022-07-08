@@ -7,11 +7,13 @@ typedef JSON = Map<String, dynamic>;
 
 @JsonSerializable()
 class Area {
+  final int id;
   final List<Contact> contacts;
   final List<Device> devices;
   final List<String> notes;
 
   const Area({
+    required this.id,
     required this.contacts,
     required this.devices,
     this.notes = const [],
@@ -24,6 +26,7 @@ class Area {
 
 @JsonSerializable()
 class Contact {
+  final int id;
   final String name;
   final String phone;
   final int priority;
@@ -31,6 +34,7 @@ class Contact {
   final DateTime updated;
 
   const Contact({
+    required this.id,
     required this.name,
     required this.phone,
     required this.priority,
@@ -74,13 +78,13 @@ class Device {
 
 @JsonSerializable()
 class DeviceAction {
-  final String type;
+  final int id;
   final String name;
   final bool outlined;
 
   const DeviceAction({
+    required this.id,
     required this.name,
-    required this.type,
     this.outlined = false,
   });
 

@@ -68,6 +68,7 @@ class RoomCard extends StatelessWidget {
       ],
       children: [
         ...area.contacts.map((contact) => CardRow(
+          key: ValueKey(contact),
           headerRowItems: [
             CardRowItem(
               text: Text(contact.name),
@@ -111,6 +112,7 @@ class RoomCard extends StatelessWidget {
           ],
         )),
         ...area.devices.map((device) => CardRow(
+          key: ValueKey(device),
           headerRowItems: [
             CardRowItem(
               text: Text(device.name),
@@ -166,6 +168,7 @@ class RoomCard extends StatelessWidget {
               },
             ),
             ...device.actions.map((action) => CustomButton(
+              key: ValueKey(action),
               text: Text(action.name.toUpperCase()),
               onPressed: () {
                 getModel().executeDeviceAction(

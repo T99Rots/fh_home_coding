@@ -1,7 +1,7 @@
 import 'package:fh_home_coding/types.dart';
 
 // fake api response data
-const Map<String, dynamic> smokeDetectorJson = {
+const JSON _smokeDetectorJson = {
   "id": 1,
   "name": "Smoke detector",
   "icon": "smoke_detector",
@@ -20,30 +20,30 @@ const Map<String, dynamic> smokeDetectorJson = {
   ],
   "actions": [
     {
-      "type": "delete",
+      "id": 1,
       "name": 'Delete',
     },
     {
-      "type": "identify",
+      "id": 2,
       "name": 'identify',
     },
     {
-      "type": "ping",
+      "id": 3,
       "name": 'Ping',
     },
     {
-      "type": "sensitivity",
+      "id": 4,
       "name": 'Sensitivity',
     },
     {
-      "type": "test_siren",
+      "id": 5,
       "name": 'Test siren',
       "outlined": true
     },
   ]
 };
 
-const Map<String, dynamic> waterLeakDetectorJson = {
+const JSON _waterLeakDetectorJson = {
   "id": 1,
   "name": 'Water leak detector',
   "icon": 'water_leak_detector',
@@ -61,17 +61,18 @@ const Map<String, dynamic> waterLeakDetectorJson = {
   ],
   "actions": [
     {
-      "type": 'identify',
+      "id": 1,
       "name": 'Identify',
     },
     {
-      "type": 'ping',
+      "id": 2,
       "name": 'Ping',
     },
   ],
 };
 
-const Map<String, dynamic> contactJson = {
+const JSON _contactJson = {
+  "id": 1,
   "name": "Board member",
   "phone": "+47 444 44 444",
   "priority": 1,
@@ -79,74 +80,68 @@ const Map<String, dynamic> contactJson = {
   "updated": "1970-01-01T01:00:00.000",
 };
 
-// a async mockup api
-class MockApi {
-  Future<List<Area>> getAreas() async {
+int _idCounter = 10;
+
+// a fake async api
+class Api {
+  Future<List<JSON>> getAreas() async {
     await Future.delayed(const Duration(milliseconds: 125));
-    final List<Map<String, dynamic>> apiResponse = [{
+    return [{
+      "id": 1,
       "contacts": [
-        contactJson
-        ],
+        _contactJson
+      ],
       "devices": [
-        smokeDetectorJson,
-        waterLeakDetectorJson
+        _smokeDetectorJson,
+        _waterLeakDetectorJson
+      ],
+      "notes": [
+        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+        "Aliquam tincidunt mauris eu risus.",
       ]
     }];
-
-    final List<Area> areas = [];
-    for(final areaJson in apiResponse) {
-      areas.add(Area.fromJson(areaJson));
-    }
-    return areas;
   }
 
-  Future<Contact> addContact({
-    required Area area,
+  Future<JSON> addContact({
+    required int areaId,
     required String name,
     required String phone,
     required String email,
     required int priority
   }) async {
     await Future.delayed(const Duration(milliseconds: 125));
-    final String apiResponse = DateTime.now().toIso8601String();
-
-    return Contact(
-      name: name,
-      phone: phone,
-      priority: priority,
-      email: email,
-      updated: DateTime.parse(apiResponse)
-    );
+    return {
+      'updated': DateTime.now().toIso8601String(),
+      'id': _idCounter++
+    };
   }
 
   Future<void> removeContact({
-    required Area area,
+    required int areaId,
     required Contact contact,
   }) async {
     await Future.delayed(const Duration(milliseconds: 125));
   }
 
-  Future<Device> addDevice({
-    required Area area,
+  Future<JSON> addDevice({
+    required int areaId,
     required String address
   }) async {
     await Future.delayed(const Duration(milliseconds: 125));
-    const apiResponse = smokeDetectorJson;
-
-    return Device.fromJson(apiResponse);
+    return _smokeDetectorJson;
   }
 
   Future<void> removeDevice({
-    required Area area,
-    required Device device
+    required int areaId,
+    required int deviceId
   }) async {
     await Future.delayed(const Duration(milliseconds: 125));
   }
 
   Future<void> executeDeviceAction({
-    required Area area,
-    required Device device,
-    required DeviceAction deviceAction,
+    required int areaId,
+    required int deviceId,
+    required int deviceActionId,
   }) async {
     await Future.delayed(const Duration(milliseconds: 125));
   }

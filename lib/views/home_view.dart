@@ -9,25 +9,34 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<AreaModel>();
-
     return Scaffold(
       backgroundColor: const Color(0xffe8e8e8),
       appBar: AppBar(
         backgroundColor: const Color(0xff212121),
         title: const Text('Future Home coding assignment'),
       ),
-      body: model.loaded? Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: model.areas.map((area) => ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 1160
+      body: model.loaded? SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height - 56
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: model.areas.map((area) => ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: 1160
+                  ),
+                  child: RoomCard(
+                    area: area,
+                  )
+                )).toList()
+              ),
             ),
-            child: RoomCard(
-              area: area,
-            )
-          )).toList()
+          ),
         ),
       ): const Center(
         child: CircularProgressIndicator(

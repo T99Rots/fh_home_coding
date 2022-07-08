@@ -7,6 +7,7 @@ part of 'types.dart';
 // **************************************************************************
 
 Area _$AreaFromJson(Map<String, dynamic> json) => Area(
+      id: json['id'] as int,
       contacts: (json['contacts'] as List<dynamic>)
           .map((e) => Contact.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -19,12 +20,14 @@ Area _$AreaFromJson(Map<String, dynamic> json) => Area(
     );
 
 Map<String, dynamic> _$AreaToJson(Area instance) => <String, dynamic>{
+      'id': instance.id,
       'contacts': instance.contacts,
       'devices': instance.devices,
       'notes': instance.notes,
     };
 
 Contact _$ContactFromJson(Map<String, dynamic> json) => Contact(
+      id: json['id'] as int,
       name: json['name'] as String,
       phone: json['phone'] as String,
       priority: json['priority'] as int,
@@ -33,6 +36,7 @@ Contact _$ContactFromJson(Map<String, dynamic> json) => Contact(
     );
 
 Map<String, dynamic> _$ContactToJson(Contact instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'phone': instance.phone,
       'priority': instance.priority,
@@ -69,14 +73,14 @@ Map<String, dynamic> _$DeviceToJson(Device instance) => <String, dynamic>{
     };
 
 DeviceAction _$DeviceActionFromJson(Map<String, dynamic> json) => DeviceAction(
+      id: json['id'] as int,
       name: json['name'] as String,
-      type: json['type'] as String,
       outlined: json['outlined'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$DeviceActionToJson(DeviceAction instance) =>
     <String, dynamic>{
-      'type': instance.type,
+      'id': instance.id,
       'name': instance.name,
       'outlined': instance.outlined,
     };

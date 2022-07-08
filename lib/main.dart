@@ -1,4 +1,4 @@
-import 'package:fh_home_coding/mock_api.dart';
+import 'package:fh_home_coding/api.dart';
 import 'package:fh_home_coding/models/area_model.dart';
 import 'package:fh_home_coding/routes.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class FLutterCodingAssignmentApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AreaModel(MockApi())..loadAreas())
+        ChangeNotifierProvider(create: (_) => AreaModel(Api())..loadAreas())
       ],
       child: MaterialApp(
         routes: routes,
