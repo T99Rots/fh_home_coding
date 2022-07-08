@@ -1,24 +1,18 @@
 import 'package:fh_home_coding/components/button.dart';
 import 'package:fh_home_coding/components/card.dart';
+import 'package:fh_home_coding/device_icons.dart';
+import 'package:fh_home_coding/models/area_model.dart';
+import 'package:fh_home_coding/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class RoomCard extends StatelessWidget {
-  final List<Contact> contacts;
-  final List<Device> devices;
-  final int notes;
-  final VoidCallback onAddContact;
-  final VoidCallback onAddDevice;
-  final VoidCallback onAddRoom;
+  final Area area;
 
   const RoomCard({
     Key? key,
-    required this.contacts,
-    required this.devices,
-    required this.onAddContact,
-    required this.onAddDevice,
-    required this.onAddRoom,
-    required this.notes
+    required this.area
   }) : super(key: key);
 
   @override
@@ -27,6 +21,8 @@ class RoomCard extends StatelessWidget {
       color: Color(0xffF18303),
       fontWeight: FontWeight.w600
     );
+
+    getModel() => context.read<AreaModel>();
 
     return CustomCard(
       leading: SizedBox(
@@ -39,26 +35,39 @@ class RoomCard extends StatelessWidget {
         CustomButton(
           text: const Text('CONTACT'),
           leading: const Icon(Icons.add),
-          onPressed: onAddContact
+          onPressed: () {
+            getModel().addContact(
+              area: area,
+              name: 'New contact',
+              phone: '+31 1234 56 789',
+              email: 'email@example.com',
+              priority: 1
+            );
+          }
         ),
         CustomButton(
           text: const Text('ROOM'),
           leading: const Icon(Icons.add),
-          onPressed: onAddRoom
+          onPressed: () {}
         ),
         CustomButton(
           text: const Text('DEVICE'),
           leading: const Icon(Icons.add),
-          onPressed: onAddDevice
+          onPressed: () {
+            getModel().addDevice(
+              area: area,
+              address: '3_0'
+            );
+          }
         ),
         CustomButton(
-          text: Text('${notes} NOTES'),
+          text: Text('${area.notes.length} NOTES'),
           trailing: const Icon(Icons.navigate_next),
           onPressed: () {}
         )
       ],
       children: [
-        ...contacts.map((contact) => CardRow(
+        ...area.contacts.map((contact) => CardRow(
           headerRowItems: [
             CardRowItem(
               text: Text(contact.name),
@@ -88,19 +97,24 @@ class RoomCard extends StatelessWidget {
           leadingActions: [
             CustomButton(
               text: const Text('EDIT'),
-              onPressed: contact.onEdit
+              onPressed: () {}
             ),
             CustomButton(
               text: const Text('DELETE'),
-              onPressed: contact.onDelete
+              onPressed: () {
+                getModel().removeContact(
+                  area: area,
+                  contact: contact
+                );
+              }
             ),
           ],
         )),
-        ...devices.map((device) => CardRow(
+        ...area.devices.map((device) => CardRow(
           headerRowItems: [
             CardRowItem(
               text: Text(device.name),
-              leading: device.icon,
+              leading: getDeviceIcon(device.icon),
             ),
             CardRowItem(
               text: device.online? const Text('Online'): const Text(
@@ -136,9 +150,30 @@ class RoomCard extends StatelessWidget {
             )
           ],
           leadingActions: [
+            CustomButton(
+              text: const Text('EDIT'),
+              onPressed: () {
+
+              },
+            ),
+            CustomButton(
+              text: const Text('UNPAIR'),
+              onPressed: () {
+                getModel().removeDevice(
+                  area: area,
+                  device: device
+                );
+              },
+            ),
             ...device.actions.map((action) => CustomButton(
               text: Text(action.name.toUpperCase()),
-              onPressed: action.onPressed,
+              onPressed: () {
+                getModel().executeDeviceAction(
+                  area: area,
+                  device: device,
+                  deviceAction: action
+                );
+              },
               outlined: action.outlined,
             ))
           ],
@@ -149,7 +184,7 @@ class RoomCard extends StatelessWidget {
               onPressed: () {}
             ),
             CustomButton(
-              text: Text('${device.notes} NOTES'),
+              text: Text('${device.notes.length} NOTES'),
               trailing: const Icon(Icons.navigate_next),
               onPressed: () {}
             ),
@@ -158,60 +193,4 @@ class RoomCard extends StatelessWidget {
       ],
     );
   }
-}
-
-class Contact {
-  final String name;
-  final String phone;
-  final int priority;
-  final String email;
-  final DateTime updated;
-  final VoidCallback onEdit;
-  final VoidCallback onDelete;
-
-  const Contact({
-    required this.name,
-    required this.phone,
-    required this.priority,
-    required this.email,
-    required this.onDelete,
-    required this.onEdit,
-    required this.updated,
-  });
-}
-
-class Device {
-  final int id;
-  final String name;
-  final String address;
-  final bool online;
-  final bool secure;
-  final bool configured;
-  final List<DeviceAction> actions;
-  final int notes;
-  final Widget icon;
-
-  const Device({
-    required this.id,
-    required this.name,
-    required this.address,
-    required this.online,
-    required this.secure,
-    required this.configured,
-    required this.actions,
-    required this.notes,
-    required this.icon,
-  });
-}
-
-class DeviceAction {
-  final String name;
-  final VoidCallback onPressed;
-  final bool outlined;
-
-  const DeviceAction({
-    required this.name,
-    required this.onPressed,
-    this.outlined = false,
-  });
 }

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:fh_home_coding/components/equally_divided_row.dart';
 import 'package:fh_home_coding/components/expanding_container.dart';
 import 'package:flutter/material.dart';
